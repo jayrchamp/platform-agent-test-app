@@ -7,6 +7,7 @@
       <p>Port: 3000</p>
       <p>Build: {{ buildTime }}</p>
       <p>Uptime: {{ uptime }}s</p>
+      <p>App : {{ appName }}</p>
     </div>
   </div>
 </template>
@@ -15,11 +16,14 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const buildTime = __BUILD_TIME__;
+const appName = window.__RUNTIME_CONFIG__?.APP_NAME || 'N/A';
 const uptime = ref(0);
 let interval: ReturnType<typeof setInterval>;
 
 onMounted(() => {
-  interval = setInterval(() => { uptime.value++; }, 1000);
+  interval = setInterval(() => {
+    uptime.value++;
+  }, 1000);
 });
 
 onUnmounted(() => {
@@ -28,7 +32,11 @@ onUnmounted(() => {
 </script>
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #0f172a;
@@ -52,9 +60,18 @@ h1 {
   margin-bottom: 1rem;
   color: #f8fafc;
 }
-.status { margin-bottom: 0.5rem; }
-.ok { color: #4ade80; font-weight: 600; }
-.info { color: #94a3b8; font-size: 0.875rem; margin-bottom: 1.5rem; }
+.status {
+  margin-bottom: 0.5rem;
+}
+.ok {
+  color: #4ade80;
+  font-weight: 600;
+}
+.info {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
 .meta {
   background: #0f172a;
   border-radius: 0.5rem;
@@ -62,5 +79,7 @@ h1 {
   font-size: 0.75rem;
   color: #64748b;
 }
-.meta p { margin: 0.25rem 0; }
+.meta p {
+  margin: 0.25rem 0;
+}
 </style>

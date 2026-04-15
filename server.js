@@ -43,9 +43,21 @@ const server = createServer((req, res) => {
   }
 
   try {
-    const content = readFileSync(filePath);
+    let content = readFileSync(filePath);
     const ext = extname(filePath);
     const mime = MIME_TYPES[ext] ?? 'application/octet-stream';
+
+    // Inject runtime env vars into HTML responses
+    if (ext === '.html') {
+      const runtimeConfig = JSON.stringify({
+        APP_NAME: process.env.APP_NAME ?? '',
+      });
+      const injection = `<script>window.__RUNTIME_CONFIG__=${runtimeConfig}</script>`;
+      content = Buffer.from(
+        content.toString().replace('</head>', `${injection}</head>`)
+      );
+    }
+
     res.writeHead(200, { 'Content-Type': mime });
     res.end(content);
   } catch {

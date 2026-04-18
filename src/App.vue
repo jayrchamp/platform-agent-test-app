@@ -8,6 +8,7 @@
       <p>Build: {{ buildTime }}</p>
       <p>Uptime: {{ uptime }}s</p>
       <p>App : {{ appName }}</p>
+      <p>Version: {{ version }}</p>
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const buildTime = __BUILD_TIME__;
 const appName = window.__RUNTIME_CONFIG__?.APP_NAME || 'N/A';
+const version = window.__RUNTIME_CONFIG__?.VERSION || 'N/A';
 const uptime = ref(0);
 let interval: ReturnType<typeof setInterval>;
 

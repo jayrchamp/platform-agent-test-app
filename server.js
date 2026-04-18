@@ -5,6 +5,7 @@ import { createServer } from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import pkg from './package.json' with { type: 'json' }
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const DIST = join(__dirname, 'dist');
@@ -51,6 +52,7 @@ const server = createServer((req, res) => {
     if (ext === '.html') {
       const runtimeConfig = JSON.stringify({
         APP_NAME: process.env.APP_NAME ?? '',
+        VERSION: version,
       });
       const injection = `<script>window.__RUNTIME_CONFIG__=${runtimeConfig}</script>`;
       content = Buffer.from(

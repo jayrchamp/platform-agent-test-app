@@ -40,5 +40,7 @@ jobs:
           tags: |
             ghcr.io/jayrchamp/platform-agent-test-app:${{ steps.version.outputs.version }}
             ghcr.io/jayrchamp/platform-agent-test-app:latest
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

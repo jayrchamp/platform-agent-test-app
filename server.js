@@ -52,7 +52,7 @@ const server = createServer((req, res) => {
     if (ext === '.html') {
       const runtimeConfig = JSON.stringify({
         APP_NAME: process.env.APP_NAME ?? '',
-        VERSION: version,
+        VERSION: pkg.version,
       });
       const injection = `<script>window.__RUNTIME_CONFIG__=${runtimeConfig}</script>`;
       content = Buffer.from(
